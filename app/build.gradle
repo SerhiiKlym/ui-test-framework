@@ -35,6 +35,7 @@ test {
     testLogging {
         showStandardStreams = true
         events "PASSED", "FAILED", "SKIPPED"
+        systemProperty "config.file", "src/test/resources/config.properties"
     }
 
     reports {
