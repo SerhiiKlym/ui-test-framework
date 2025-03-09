@@ -31,22 +31,22 @@ jobs:
       - name: Install Chrome and Matching ChromeDriver
         run: |
           sudo apt update
-          sudo apt install -y google-chrome-stable wget unzip curl
+          sudo apt install -y google-chrome-stable wget unzip curl jq
 
           CHROME_VERSION=$(google-chrome --version | grep -oP '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
           echo "Detected Chrome version: $CHROME_VERSION"
 
-          DRIVER_VERSION=$(curl -s "https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json" | \
-                           jq -r ".versions[] | select(.version | startswith(\"$CHROME_VERSION\")) | .downloads.chromedriver[] | select(.platform == \"linux64\") | .url")
+          DRIVER_URL=$(curl -s "https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json" | \
+                       jq -r ".versions[] | select(.version | startswith(\"$CHROME_VERSION\")) | .downloads.chromedriver[] | select(.platform == \"linux64\") | .url" | tail -1)
 
-          if [[ -z "$DRIVER_VERSION" ]]; then
+          if [[ -z "$DRIVER_URL" ]]; then
             echo "Error: Could not find a matching ChromeDriver version for Chrome $CHROME_VERSION"
             exit 1
           fi
 
-          echo "Downloading ChromeDriver from: $DRIVER_VERSION"
+          echo "Downloading ChromeDriver from: $DRIVER_URL"
 
-          wget -q -O /tmp/chromedriver.zip "$DRIVER_VERSION"
+          wget -q -O /tmp/chromedriver.zip "$DRIVER_URL"
           unzip /tmp/chromedriver.zip -d /tmp/
           sudo mv /tmp/chromedriver-linux64/chromedriver /usr/bin/chromedriver
           sudo chmod +x /usr/bin/chromedriver
