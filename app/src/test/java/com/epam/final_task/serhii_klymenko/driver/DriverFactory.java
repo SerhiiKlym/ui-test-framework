@@ -11,7 +11,7 @@ public class DriverFactory {
     public static WebDriver getDriver() {
 
         if (driver.get() == null) {
-            String browser = ConfigReader.get("browser").toLowerCase();
+            String browser = ConfigReader.get("browsers").toLowerCase();
 
             switch (browser) {
                 case "firefox" -> driver.set(new FirefoxDriver());
@@ -23,7 +23,7 @@ public class DriverFactory {
         return driver.get();
     }
 
-    private static void closeDriver() {
+    public static void closeDriver() {
         if (driver.get() != null) {
             driver.get().quit();
             driver.remove();

@@ -2,6 +2,7 @@ package com.epam.final_task.serhii_klymenko.page;
 
 import com.epam.final_task.serhii_klymenko.util.ConfigReader;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -23,21 +24,17 @@ public class LoginPage extends AbstractPage {
     WebElement userPasswordInputField;
     @FindBy(css = "#login-button")
     WebElement loginButton;
-    @FindBy(css = ".error-button")
-    WebElement clearInputsButton;
-    @FindBy(css = ".error-message-container.error h3")
-    WebElement userNameRequiredError;
 
     private final By errorMessage = By.cssSelector(".error-message-container.error h3");
 
-    protected LoginPage(WebDriver driver) {
+    public LoginPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(Long.parseLong(timeout)));
     }
 
     @Override
-    protected AbstractPage openPage() {
+    public LoginPage openPage() {
         driver.get(baseUrl);
         return this;
     }
@@ -48,24 +45,23 @@ public class LoginPage extends AbstractPage {
         return this;
     }
 
-    public LoginPage clearName() {
-        wait.until(ExpectedConditions.visibilityOf(userNameInputField)).clear();
+    public LoginPage clearName()  {
+//        wait.until(ExpectedConditions.elementToBeClickable(userNameInputField)).click(); //chrome autofills name after clear()
+//        wait.until(ExpectedConditions.visibilityOf(userNameInputField)).clear();
+        userNameInputField.sendKeys(Keys.CONTROL + "a");
+        userNameInputField.sendKeys(Keys.BACK_SPACE);
         return this;
     }
 
     // TODO: parametrize
-    public LoginPage inputRandomPassword() {
+    public LoginPage inputRandomPassword()  {
         wait.until(ExpectedConditions.visibilityOf(userPasswordInputField)).sendKeys("random_pass");
         return this;
     }
 
-    public LoginPage clearPassword() {
+    public LoginPage clearPassword()  {
+        wait.until(ExpectedConditions.elementToBeClickable(userPasswordInputField)).click();
         wait.until(ExpectedConditions.visibilityOf(userPasswordInputField)).clear();
-        return this;
-    }
-
-    public LoginPage removeErrorMessageButton() {
-        wait.until(ExpectedConditions.visibilityOf(clearInputsButton)).click();
         return this;
     }
 
@@ -81,6 +77,4 @@ public class LoginPage extends AbstractPage {
     public String getErrorMessage() {
         return driver.findElement(errorMessage).getText();
     }
-
-
 }
