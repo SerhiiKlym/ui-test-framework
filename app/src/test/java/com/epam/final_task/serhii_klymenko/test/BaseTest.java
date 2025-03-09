@@ -15,12 +15,12 @@ public class BaseTest {
     @BeforeMethod
     public void setUp() {
       DriverFactory.getDriver();
-        log.info(log.getName() + ": The driver was created. ");
+        log.info("The driver was created. ");
     }
 
     @AfterMethod
     public void tearDown() {
       DriverFactory.closeDriver();
-        log.info(log.getName() + ": The driver was annihilated. ");
+        log.info("The driver was annihilated. ");
     }
 }
