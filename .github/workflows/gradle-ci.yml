@@ -9,6 +9,9 @@ on:
 jobs:
   selenium-test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        browser: [ chrome, firefox ]  # Run tests on both Chrome and Firefox
 
     steps:
       - name: Checkout Repository
@@ -65,8 +68,8 @@ jobs:
       - name: Grant execute permission for Gradle
         run: chmod +x gradlew
 
-      - name: Run Selenium Tests
-        run: ./gradlew test --no-daemon  # Runs all tests
+      - name: Run Selenium Tests with ${{ matrix.browser }}
+        run: ./gradlew test -Dbrowser=${{ matrix.browser }} --no-daemon
 
       - name: Upload Test Results (Optional)
         uses: actions/upload-artifact@v4

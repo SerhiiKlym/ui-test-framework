@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 
 public class DriverFactory {
     private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
@@ -15,7 +16,14 @@ public class DriverFactory {
             String browser = ConfigReader.get("browsers").toLowerCase();
 
             switch (browser) {
-                case "firefox" -> driver.set(new FirefoxDriver());
+                case "firefox" -> {
+                    FirefoxOptions options = new FirefoxOptions();
+                    if (System.getenv("GITHUB_ACTIONS") != null) {
+                        options.addArguments("--headless");
+                    }
+
+                    driver.set(new FirefoxDriver(options));
+                }
                 case "chrome" -> {
                     ChromeOptions options = new ChromeOptions();
 
