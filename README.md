@@ -32,7 +32,7 @@ Automate the following script:
 * Make sure that all tasks are supported by these 3 conditions: UC-1; UC-2; UC-3.
 * Add task description as README.md into your solution
 
-## To perform the task use the various of additional options:
+## To perform the task, use various additional options:
 
 * Test Automation tool: Selenium WebDriver;
 * Project Builder: ~~Maven~~ Gradle;
