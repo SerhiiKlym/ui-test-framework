@@ -3,6 +3,7 @@ package com.epam.final_task.serhii_klymenko.driver;
 import com.epam.final_task.serhii_klymenko.util.ConfigReader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class DriverFactory {
@@ -15,7 +16,19 @@ public class DriverFactory {
 
             switch (browser) {
                 case "firefox" -> driver.set(new FirefoxDriver());
-                case "chrome" -> driver.set(new ChromeDriver());
+                case "chrome" -> {
+                    ChromeOptions options = new ChromeOptions();
+
+                    // Run headless mode only in GitHub Actions
+                    if (System.getenv("GITHUB_ACTIONS") != null) {
+                        options.addArguments("--headless");
+                        options.addArguments("--disable-gpu");
+                        options.addArguments("--no-sandbox");
+                        options.addArguments("--disable-dev-shm-usage");
+                    }
+
+                    driver.set(new ChromeDriver(options));
+                }
             }
 
             driver.get().manage().window().maximize();
