@@ -1,6 +1,8 @@
 package com.epam.final_task.serhii_klymenko.driver;
 
 import com.epam.final_task.serhii_klymenko.util.ConfigReader;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -9,6 +11,8 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 
 public class DriverFactory {
     private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+    private final static Logger log = LogManager.getLogger(DriverFactory.class);
+
 
     public static WebDriver getDriver() {
 
@@ -34,6 +38,7 @@ public class DriverFactory {
                 }
 
                 driver.set(new FirefoxDriver(options));
+                log.info("The " + browser + " driver was created.");
             }
             case "chrome" -> {
                 ChromeOptions options = new ChromeOptions();
@@ -47,7 +52,7 @@ public class DriverFactory {
                 }
 
                 driver.set(new ChromeDriver(options));
-
+                log.info("The " + browser + " driver was created.");
             }
             default -> throw new IllegalArgumentException("Unsupported browser: " + browser);
         }
