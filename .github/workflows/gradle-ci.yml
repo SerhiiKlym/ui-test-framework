@@ -31,16 +31,17 @@ jobs:
       - name: Install Chrome and Matching ChromeDriver
         run: |
           sudo apt update
-          sudo apt install -y google-chrome-stable
-          sudo apt install -y wget unzip
+          sudo apt install -y google-chrome-stable wget unzip
 
-          CHROME_VERSION=$(google-chrome --version | grep -oP '[0-9]+\.[0-9]+\.[0-9]+')
+          CHROME_VERSION=$(google-chrome --version | grep -oP '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
+          echo "Detected Chrome version: $CHROME_VERSION"
 
-          DRIVER_VERSION=$(curl -s "https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json" | jq -r ".versions[] | select(.version | startswith(\"$CHROME_VERSION\")) | .downloads.chromedriver[] | select(.platform == \"linux64\") | .url")
+          DRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
+          echo "Installing ChromeDriver version: $DRIVER_VERSION"
 
-          wget -q -O /tmp/chromedriver.zip "$DRIVER_VERSION"
+          wget -q -O /tmp/chromedriver.zip "https://chromedriver.storage.googleapis.com/$DRIVER_VERSION/chromedriver_linux64.zip"
           unzip /tmp/chromedriver.zip -d /tmp/
-          sudo mv /tmp/chromedriver-linux64/chromedriver /usr/bin/chromedriver
+          sudo mv /tmp/chromedriver /usr/bin/chromedriver
           sudo chmod +x /usr/bin/chromedriver
           chromedriver --version
 
