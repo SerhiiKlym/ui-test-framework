@@ -29,7 +29,7 @@ public class DriverFactory {
     }
 
     private static void createDriver() {
-        String browser = ConfigReader.get("browsers").toLowerCase();
+        String browser = System.getProperty("browser", ConfigReader.get("browsers")).toLowerCase();
         switch (browser) {
             case "firefox" -> {
                 FirefoxOptions options = new FirefoxOptions();
