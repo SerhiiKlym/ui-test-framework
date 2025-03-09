@@ -13,34 +13,44 @@ public class DriverFactory {
     public static WebDriver getDriver() {
 
         if (driver.get() == null) {
-            String browser = ConfigReader.get("browsers").toLowerCase();
-
-            switch (browser) {
-                case "firefox" -> {
-                    FirefoxOptions options = new FirefoxOptions();
-                    if (System.getenv("GITHUB_ACTIONS") != null) {
-                        options.addArguments("--headless");
-                    }
-
-                    driver.set(new FirefoxDriver(options));
-                }
-                case "chrome" -> {
-                    ChromeOptions options = new ChromeOptions();
-
-                    // Run headless mode only in GitHub Actions
-                    if (System.getenv("GITHUB_ACTIONS") != null) {
-                        options.addArguments("--headless");
-                        options.addArguments("--disable-gpu");
-                        options.addArguments("--no-sandbox");
-                        options.addArguments("--disable-dev-shm-usage");
-                    }
-
-                    driver.set(new ChromeDriver(options));
+            synchronized (DriverFactory.class) {
+                if (driver.get() == null) {
+                    createDriver();
                 }
             }
         }
+
         driver.get().manage().window().maximize();
         return driver.get();
+    }
+
+    private static void createDriver() {
+        String browser = ConfigReader.get("browsers").toLowerCase();
+        switch (browser) {
+            case "firefox" -> {
+                FirefoxOptions options = new FirefoxOptions();
+                if (System.getenv("GITHUB_ACTIONS") != null) {
+                    options.addArguments("--headless");
+                }
+
+                driver.set(new FirefoxDriver(options));
+            }
+            case "chrome" -> {
+                ChromeOptions options = new ChromeOptions();
+
+                // Run headless mode only in GitHub Actions
+                if (System.getenv("GITHUB_ACTIONS") != null) {
+                    options.addArguments("--headless");
+                    options.addArguments("--disable-gpu");
+                    options.addArguments("--no-sandbox");
+                    options.addArguments("--disable-dev-shm-usage");
+                }
+
+                driver.set(new ChromeDriver(options));
+
+            }
+            default -> throw new IllegalArgumentException("Unsupported browser: " + browser);
+        }
     }
 
     public static void closeDriver() {
