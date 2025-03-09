@@ -11,37 +11,35 @@ public class DriverFactory {
     private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
     public static WebDriver getDriver() {
-        synchronized (DriverFactory.class) {
-            if (driver.get() == null) {
-                String browser = ConfigReader.get("browsers").toLowerCase();
 
-                switch (browser) {
-                    case "firefox" -> {
-                        FirefoxOptions options = new FirefoxOptions();
-                        if (System.getenv("GITHUB_ACTIONS") != null) {
-                            options.addArguments("--headless");
-                        }
+        if (driver.get() == null) {
+            String browser = ConfigReader.get("browsers").toLowerCase();
 
-                        driver.set(new FirefoxDriver(options));
+            switch (browser) {
+                case "firefox" -> {
+                    FirefoxOptions options = new FirefoxOptions();
+                    if (System.getenv("GITHUB_ACTIONS") != null) {
+                        options.addArguments("--headless");
                     }
-                    case "chrome" -> {
-                        ChromeOptions options = new ChromeOptions();
 
-                        // Run headless mode only in GitHub Actions
-                        if (System.getenv("GITHUB_ACTIONS") != null) {
-                            options.addArguments("--headless");
-                            options.addArguments("--disable-gpu");
-                            options.addArguments("--no-sandbox");
-                            options.addArguments("--disable-dev-shm-usage");
-                        }
-
-                        driver.set(new ChromeDriver(options));
-                    }
+                    driver.set(new FirefoxDriver(options));
                 }
+                case "chrome" -> {
+                    ChromeOptions options = new ChromeOptions();
 
-                driver.get().manage().window().maximize();
+                    // Run headless mode only in GitHub Actions
+                    if (System.getenv("GITHUB_ACTIONS") != null) {
+                        options.addArguments("--headless");
+                        options.addArguments("--disable-gpu");
+                        options.addArguments("--no-sandbox");
+                        options.addArguments("--disable-dev-shm-usage");
+                    }
+
+                    driver.set(new ChromeDriver(options));
+                }
             }
         }
+        driver.get().manage().window().maximize();
         return driver.get();
     }
 
