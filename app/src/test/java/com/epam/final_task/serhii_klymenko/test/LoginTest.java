@@ -22,4 +22,35 @@ public class LoginTest extends BaseTest {
         }
         assertEquals(error, "Epic sadface: Username is required");
     }
+
+    @Test
+    public void UC2LoginWithEmptyPassword() {
+        LoginPage loginPage = new LoginPage(driver);
+
+        loginPage = loginPage.openPage()
+                .inputRandomName()
+                .inputRandomPassword()
+                .clearPassword()
+                .hitLoginButton();
+        String error = "";
+        if (loginPage.isErrorMessageDisplayed()) {
+            error = loginPage.getErrorMessage();
+        }
+        assertEquals(error, "Epic sadface: Password is required");
+    }
+
+    @Test
+    public void UC3LoginWithLegitCredentials() {
+        LoginPage loginPage = new LoginPage(driver);
+
+        loginPage = loginPage.openPage()
+                .inputLegitName()
+                .inputLegitPassword()
+                .hitLoginButton();
+        String welcomeMsg = "";
+        if (loginPage.isWelcomeMessageDisplayed()) {
+            welcomeMsg = loginPage.getWelcomeMessage();
+        }
+        assertEquals(welcomeMsg, "Swag Labs");
+    }
 }
