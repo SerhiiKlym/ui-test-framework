@@ -15,14 +15,14 @@ public class BaseTest {
 
     @BeforeMethod
     public void setUp() {
-        log.info("The setUp method... ");
+        log.info("The setUp method... running test on thread: " + Thread.currentThread().getId());
         DriverFactory.getDriver();
-        log.info("The driver was created. ");
     }
 
     @AfterMethod
     public void tearDown() {
         DriverFactory.closeDriver();
-        log.info("The driver was annihilated. ");
+        log.info("The driver was annihilated on thread: " + Thread.currentThread().getId());
+
     }
 }

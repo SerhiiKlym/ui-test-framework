@@ -1,13 +1,19 @@
 package com.epam.final_task.serhii_klymenko.test;
 
 import com.epam.final_task.serhii_klymenko.page.LoginPage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
 
 public class LoginTest extends BaseTest {
+
+    private final static Logger log = LogManager.getLogger(LoginTest.class);
+
     @Test
     public void UC1LoginWithEmptyCredentials() {
+        log.info("Running test on thread: " + Thread.currentThread().getId());
         LoginPage loginPage = new LoginPage();
 
         loginPage = loginPage.openPage()
@@ -25,6 +31,7 @@ public class LoginTest extends BaseTest {
 
     @Test
     public void UC2LoginWithEmptyPassword() {
+        log.info("Running test on thread: " + Thread.currentThread().getId());
         LoginPage loginPage = new LoginPage();
 
         loginPage = loginPage.openPage()
@@ -41,6 +48,7 @@ public class LoginTest extends BaseTest {
 
     @Test
     public void UC3LoginWithLegitCredentials() {
+        log.info("Running test on thread: " + Thread.currentThread().getId());
         LoginPage loginPage = new LoginPage();
 
         loginPage = loginPage.openPage()

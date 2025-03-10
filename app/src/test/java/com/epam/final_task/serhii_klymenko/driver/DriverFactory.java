@@ -60,9 +60,10 @@ public class DriverFactory {
                 }
 
                 driver.set(new ChromeDriver(options));
-                log.info("The " + browser + " driver was created.");
+                log.info("The " + browser + " driver was created on thread: " + Thread.currentThread().getId());
+
             }
-            default -> throw new IllegalArgumentException("Unsupported browser: " + browser);
+            default -> throw new IllegalArgumentException("Unsupported browser " + browser + " on thread: " + Thread.currentThread().getId());
         }
     }
 
