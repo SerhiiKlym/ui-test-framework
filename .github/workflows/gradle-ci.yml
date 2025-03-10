@@ -86,19 +86,12 @@ jobs:
           firefox --version
           geckodriver --version
 
-      - name: Set Firefox Binary Path
-        if: matrix.browser == 'firefox'
-        run: echo "FIREFOX_BIN=/usr/bin/firefox" >> $GITHUB_ENV
-
-      - name: Add GeckoDriver to PATH
-        if: matrix.browser == 'firefox'
-        run: echo "PATH=$PATH:/usr/local/bin" >> $GITHUB_ENV
-
 
       - name: Grant execute permission for Gradle
         run: chmod +x gradlew
 
       - name: Check Geckodriver Installation
+        if: matrix.browser == 'firefox'
         run: |
           echo "Checking Geckodriver installation..."
           which geckodriver || echo "Geckodriver not found!"
