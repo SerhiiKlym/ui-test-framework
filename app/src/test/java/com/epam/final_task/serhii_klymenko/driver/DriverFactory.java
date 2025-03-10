@@ -40,6 +40,7 @@ public class DriverFactory {
         switch (browser) {
             case "firefox" -> {
                 FirefoxOptions options = new FirefoxOptions();
+                options.setBinary("/usr/bin/firefox"); // Ensure correct Firefox binary
                 if (System.getenv("GITHUB_ACTIONS") != null) {
                     options.addArguments("--headless");
                 }
