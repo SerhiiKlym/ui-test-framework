@@ -32,6 +32,7 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Install Chrome and Matching ChromeDriver
+        if: matrix.browser == 'chrome'
         run: |
           sudo apt update
           sudo apt install -y google-chrome-stable wget unzip curl jq
@@ -56,6 +57,7 @@ jobs:
           chromedriver --version
 
       - name: Install Firefox and GeckoDriver
+        if: matrix.browser == 'firefox'
         run: |
           sudo apt install -y firefox
           sudo apt install -y wget tar unzip
