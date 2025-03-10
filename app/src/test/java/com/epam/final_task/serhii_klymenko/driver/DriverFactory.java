@@ -29,10 +29,14 @@ public class DriverFactory {
     }
 
     private static void createDriver() {
-        String browser = System.getProperty("browser", ConfigReader.get("browsers")).toLowerCase();
-        log.info("Browser value detected: " + browser); // debug
-        log.info("System property browser: " + System.getProperty("browser"));
-        log.info("Config file browser: " + ConfigReader.get("browsers"));
+        String browser = System.getProperty("browser"); // Get from system properties
+        log.info("System property browser: " + browser);
+
+        if (browser == null || browser.isEmpty()) {
+            browser = ConfigReader.get("browsers").toLowerCase(); // Get from config file
+        }
+
+        log.info("Final browser selection: " + browser); // Ensure correct value is used
         switch (browser) {
             case "firefox" -> {
                 FirefoxOptions options = new FirefoxOptions();
