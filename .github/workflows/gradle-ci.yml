@@ -95,4 +95,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: selenium-test-results
-          path: build/reports/tests/
+          path: app/build/reports/tests/test/
