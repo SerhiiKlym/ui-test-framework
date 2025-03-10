@@ -32,7 +32,7 @@ dependencies {
 test {
     useTestNG() {}
 
-   // systemProperty "browser", System.getProperty("browser", "chrome")
+    systemProperty "browser", System.getProperty("browser", "chrome")
 
     testLogging {
         showStandardStreams = true
