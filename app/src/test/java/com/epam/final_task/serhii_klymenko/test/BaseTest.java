@@ -12,15 +12,17 @@ import org.testng.annotations.Listeners;
 public class BaseTest {
     private final static Logger log = LogManager.getLogger(BaseTest.class);
 
+
     @BeforeMethod
     public void setUp() {
-      DriverFactory.getDriver();
+        log.info("The setUp method... ");
+        DriverFactory.getDriver();
         log.info("The driver was created. ");
     }
 
     @AfterMethod
     public void tearDown() {
-      DriverFactory.closeDriver();
+        DriverFactory.closeDriver();
         log.info("The driver was annihilated. ");
     }
 }
