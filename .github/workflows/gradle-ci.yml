@@ -60,21 +60,30 @@ jobs:
         if: matrix.browser == 'firefox'
         run: |
           sudo apt update
-          sudo apt install -y firefox wget tar unzip jq
 
-          # Remove any existing geckodriver
+          # Remove existing Firefox installation
+          sudo apt remove --purge -y firefox
+          sudo apt autoremove -y
+
+          # Install a specific Firefox version (e.g., 120.0)
+          FIREFOX_VERSION="120.0"  # Change this to the desired version
+          wget "https://ftp.mozilla.org/pub/firefox/releases/$FIREFOX_VERSION/linux-x86_64/en-US/firefox-$FIREFOX_VERSION.tar.bz2"
+          tar -xjf "firefox-$FIREFOX_VERSION.tar.bz2"
+          sudo mv firefox /opt/firefox
+          sudo ln -sf /opt/firefox/firefox /usr/bin/firefox
+
+          # Remove any existing Geckodriver
           sudo rm -f /usr/local/bin/geckodriver
-          sudo rm -f /snap/bin/geckodriver
 
-          # Install the recommended GeckoDriver version (0.36.0 for Firefox 136.0)
-          GECKODRIVER_VERSION="v0.36.0"  # Explicitly set the correct version
-
+          # Install a compatible Geckodriver version (e.g., 0.34.0)
+          GECKODRIVER_VERSION="v0.34.0"
           wget "https://github.com/mozilla/geckodriver/releases/download/$GECKODRIVER_VERSION/geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz"
           tar -xvzf "geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz"
           sudo mv geckodriver /usr/local/bin/
           sudo chmod +x /usr/local/bin/geckodriver
 
-          # Verify installation
+          # Verify installations
+          firefox --version
           geckodriver --version
 
       - name: Set Firefox Binary Path
