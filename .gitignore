@@ -32,7 +32,7 @@ build
 # Ignore IntelliJ project files
 .idea/
 *.iml
-*.xml
+#*.xml
 
 # Ignore Gradle Wrapper files
 #gradlew.bat

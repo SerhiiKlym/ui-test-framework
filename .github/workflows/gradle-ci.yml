@@ -32,6 +32,7 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Install Chrome and Matching ChromeDriver
+        if: matrix.browser == 'chrome'
         run: |
           sudo apt update
           sudo apt install -y google-chrome-stable wget unzip curl jq
@@ -56,17 +57,36 @@ jobs:
           chromedriver --version
 
       - name: Install Firefox and GeckoDriver
+        if: matrix.browser == 'firefox'
         run: |
-          sudo apt install -y firefox
-          sudo apt install -y wget tar unzip
-          GECKODRIVER_VERSION=$(curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest | jq -r '.tag_name')
+          sudo apt update
+          sudo apt install -y firefox wget tar unzip jq
+
+          # Remove any existing geckodriver
+          sudo rm -f /usr/local/bin/geckodriver
+          sudo rm -f /snap/bin/geckodriver
+
+          # Install the recommended GeckoDriver version (0.36.0 for Firefox 136.0)
+          GECKODRIVER_VERSION="v0.36.0"  # Explicitly set the correct version
+
           wget "https://github.com/mozilla/geckodriver/releases/download/$GECKODRIVER_VERSION/geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz"
           tar -xvzf "geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz"
           sudo mv geckodriver /usr/local/bin/
+          sudo chmod +x /usr/local/bin/geckodriver
+
+          # Verify installation
           geckodriver --version
 
       - name: Grant execute permission for Gradle
         run: chmod +x gradlew
+
+      - name: Check Geckodriver Installation
+        run: |
+          echo "Checking Geckodriver installation..."
+          which geckodriver || echo "Geckodriver not found!"
+          geckodriver --version || echo "Failed to get Geckodriver version"
+          ls -lah /usr/local/bin/geckodriver || echo "Geckodriver is missing from /usr/local/bin/"
+          ls -lah /snap/bin/geckodriver || echo "No snap version found"
 
       - name: Run Selenium Tests with ${{ matrix.browser }}
         run: ./gradlew test -Dbrowser=${{ matrix.browser }} --no-daemon

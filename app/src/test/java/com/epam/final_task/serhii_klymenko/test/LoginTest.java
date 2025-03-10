@@ -8,7 +8,7 @@ import static org.testng.Assert.assertEquals;
 public class LoginTest extends BaseTest {
     @Test
     public void UC1LoginWithEmptyCredentials() {
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage();
 
         loginPage = loginPage.openPage()
                 .inputRandomName()
@@ -25,7 +25,7 @@ public class LoginTest extends BaseTest {
 
     @Test
     public void UC2LoginWithEmptyPassword() {
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage();
 
         loginPage = loginPage.openPage()
                 .inputRandomName()
@@ -41,7 +41,7 @@ public class LoginTest extends BaseTest {
 
     @Test
     public void UC3LoginWithLegitCredentials() {
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage();
 
         loginPage = loginPage.openPage()
                 .inputLegitName()

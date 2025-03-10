@@ -3,7 +3,6 @@ package com.epam.final_task.serhii_klymenko.page;
 import com.epam.final_task.serhii_klymenko.util.ConfigReader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -27,8 +26,8 @@ public class LoginPage extends AbstractPage {
     private final By errorMessage = By.cssSelector(".error-message-container.error h3");
    private final By welcomeMessage = By.cssSelector("div.header_label div.app_logo");
 
-    public LoginPage(WebDriver driver) {
-        super(driver);
+    public LoginPage() {
+        super();
         PageFactory.initElements(driver, this);
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(Long.parseLong(timeout)));
     }

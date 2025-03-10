@@ -1,20 +1,28 @@
 package com.epam.final_task.serhii_klymenko.test;
 
 import com.epam.final_task.serhii_klymenko.driver.DriverFactory;
-import org.openqa.selenium.WebDriver;
+import com.epam.final_task.serhii_klymenko.util.TestListener;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 
+@Listeners({TestListener.class})
 public class BaseTest {
-    protected WebDriver driver;
+    private final static Logger log = LogManager.getLogger(BaseTest.class);
+
 
     @BeforeMethod
     public void setUp() {
-      this.driver = DriverFactory.getDriver();
+        log.info("The setUp method... ");
+        DriverFactory.getDriver();
+        log.info("The driver was created. ");
     }
 
     @AfterMethod
     public void tearDown() {
-      DriverFactory.closeDriver();
+        DriverFactory.closeDriver();
+        log.info("The driver was annihilated. ");
     }
 }
