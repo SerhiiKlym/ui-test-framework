@@ -25,7 +25,6 @@ dependencies {
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.18.2'
     implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.24.3'
     implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.24.3'
-
     implementation group: 'commons-io', name: 'commons-io', version: '2.18.0'
 }
 
@@ -37,7 +36,6 @@ test {
     testLogging {
         showStandardStreams = true
         events "PASSED", "FAILED", "SKIPPED"
-        systemProperty "config.file", "src/test/resources/config.properties"
     }
 
     reports {

@@ -40,6 +40,7 @@ public class DriverFactory {
         switch (browser) {
             case "firefox" -> {
                 FirefoxOptions options = new FirefoxOptions();
+
                 if (System.getenv("GITHUB_ACTIONS") != null) {
                     options.addArguments("--headless");
                 }
