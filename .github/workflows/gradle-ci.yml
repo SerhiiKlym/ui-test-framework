@@ -91,7 +91,8 @@ jobs:
       - name: Run Selenium Tests with ${{ matrix.browser }}
         run: ./gradlew test -Dbrowser=${{ matrix.browser }} --no-daemon
 
-      - name: Upload Test Results (Optional)
+      - name: Upload Test Results
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: selenium-test-results
