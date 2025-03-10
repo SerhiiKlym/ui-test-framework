@@ -43,6 +43,10 @@ public class DriverFactory {
                 FirefoxOptions options = new FirefoxOptions();
                 if (System.getenv("GITHUB_ACTIONS") != null) {
                     options.addArguments("--headless");
+                    //remove
+                    options.addArguments("--disable-gpu");  // Unnecessary in most cases
+                    options.addArguments("--no-sandbox");   // Usually not needed for Firefox
+                    options.addArguments("--disable-dev-shm-usage"); // Might help in some cases
                 }
 
                 driver.set(new FirefoxDriver(options));
