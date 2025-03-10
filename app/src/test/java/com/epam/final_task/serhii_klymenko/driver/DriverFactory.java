@@ -39,11 +39,12 @@ public class DriverFactory {
         log.info("Final browser selection: " + browser); // Ensure correct value is used
         switch (browser) {
             case "firefox" -> {
-                System.setProperty("webdriver.gecko.driver", "/usr/local/bin/geckodriver");//remove
+                System.setProperty("webdriver.gecko.driver", "/usr/local/bin/geckodriver --log trace");//remove
                 FirefoxOptions options = new FirefoxOptions();
                 if (System.getenv("GITHUB_ACTIONS") != null) {
                     options.addArguments("--headless");
                     //remove
+                    options.setBinary("/usr/bin/firefox");
                     options.addArguments("--disable-gpu");  // Unnecessary in most cases
                     options.addArguments("--no-sandbox");   // Usually not needed for Firefox
                     options.addArguments("--disable-dev-shm-usage"); // Might help in some cases
