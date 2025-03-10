@@ -30,6 +30,7 @@ public class DriverFactory {
 
     private static void createDriver() {
         String browser = System.getProperty("browser", ConfigReader.get("browsers")).toLowerCase();
+        log.info("Browser value detected: " + browser); // debug
         switch (browser) {
             case "firefox" -> {
                 FirefoxOptions options = new FirefoxOptions();
