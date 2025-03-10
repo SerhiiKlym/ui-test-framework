@@ -69,7 +69,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Run Selenium Tests with ${{ matrix.browser }}
-        run: ./gradlew test -Dbrowser=${{ matrix.browser }} --no-daemon
+        run: BROWSER=${{ matrix.browser }} ./gradlew test --no-daemon #run: ./gradlew test -Dbrowser=${{ matrix.browser }} --no-daemon
 
       - name: Upload Test Results (Optional)
         uses: actions/upload-artifact@v4
