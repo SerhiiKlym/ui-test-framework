@@ -39,11 +39,11 @@ public class DriverFactory {
         log.info("Final browser selection: " + browser); // Ensure correct value is used
         switch (browser) {
             case "firefox" -> {
-                System.setProperty("webdriver.gecko.driver", "/usr/local/bin/geckodriver");//remove
+          //      System.setProperty("webdriver.gecko.driver", "/usr/local/bin/geckodriver");//remove
                 FirefoxOptions options = new FirefoxOptions();
                 if (System.getenv("GITHUB_ACTIONS") != null) {
                     options.addArguments("--headless");
-                    options.setBinary("/usr/bin/firefox"); // Ensure correct Firefox binary
+          //          options.setBinary("/usr/bin/firefox"); // Ensure correct Firefox binary
                 }
 
                 driver.set(new FirefoxDriver(options));
