@@ -81,6 +81,11 @@ jobs:
         if: matrix.browser == 'firefox'
         run: echo "FIREFOX_BIN=/usr/bin/firefox" >> $GITHUB_ENV
 
+      - name: Add GeckoDriver to PATH
+        if: matrix.browser == 'firefox'
+        run: echo "PATH=$PATH:/usr/local/bin" >> $GITHUB_ENV
+
+
       - name: Grant execute permission for Gradle
         run: chmod +x gradlew
 
@@ -92,6 +97,13 @@ jobs:
           ls -lah /usr/local/bin/geckodriver || echo "Geckodriver is missing from /usr/local/bin/"
           ls -lah /snap/bin/geckodriver || echo "No snap version found"
 
+      - name: Ensure Firefox and GeckoDriver are executable
+        if: matrix.browser == 'firefox'
+        run: |
+         sudo chmod +x /usr/bin/firefox
+         sudo chmod +x /usr/local/bin/geckodriver
+    
+    
       - name: Run Selenium Tests with ${{ matrix.browser }}
         run: ./gradlew test -Dbrowser=${{ matrix.browser }} --no-daemon
 
