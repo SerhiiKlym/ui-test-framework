@@ -86,25 +86,8 @@ jobs:
           firefox --version
           geckodriver --version
 
-
       - name: Grant execute permission for Gradle
         run: chmod +x gradlew
-
-      - name: Check Geckodriver Installation
-        if: matrix.browser == 'firefox'
-        run: |
-          echo "Checking Geckodriver installation..."
-          which geckodriver || echo "Geckodriver not found!"
-          geckodriver --version || echo "Failed to get Geckodriver version"
-          ls -lah /usr/local/bin/geckodriver || echo "Geckodriver is missing from /usr/local/bin/"
-          ls -lah /snap/bin/geckodriver || echo "No snap version found"
-
-      - name: Ensure Firefox and GeckoDriver are executable
-        if: matrix.browser == 'firefox'
-        run: |
-         sudo chmod +x /usr/bin/firefox
-         sudo chmod +x /usr/local/bin/geckodriver
-    
     
       - name: Run Selenium Tests with ${{ matrix.browser }}
         run: ./gradlew test -Dbrowser=${{ matrix.browser }} --no-daemon
