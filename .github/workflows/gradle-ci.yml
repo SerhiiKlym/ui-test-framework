@@ -62,21 +62,19 @@ jobs:
           sudo apt update
           sudo apt install -y firefox wget tar unzip jq
 
-          # Get the latest GeckoDriver version dynamically
-          GECKODRIVER_VERSION=$(curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest | jq -r '.tag_name')
+          # Remove any existing geckodriver
+          sudo rm -f /usr/local/bin/geckodriver
+          sudo rm -f /snap/bin/geckodriver
 
-          if [[ -z "$GECKODRIVER_VERSION" ]]; then
-            echo "Error: Failed to retrieve the latest GeckoDriver version."
-            exit 1
-          fi
-
-          echo "Installing GeckoDriver version: $GECKODRIVER_VERSION"
+          # Install the recommended GeckoDriver version (0.36.0 for Firefox 136.0)
+          GECKODRIVER_VERSION="v0.36.0"  # Explicitly set the correct version
 
           wget "https://github.com/mozilla/geckodriver/releases/download/$GECKODRIVER_VERSION/geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz"
           tar -xvzf "geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz"
           sudo mv geckodriver /usr/local/bin/
-          chmod +x /usr/local/bin/geckodriver
+          sudo chmod +x /usr/local/bin/geckodriver
 
+          # Verify installation
           geckodriver --version
 
       - name: Grant execute permission for Gradle
