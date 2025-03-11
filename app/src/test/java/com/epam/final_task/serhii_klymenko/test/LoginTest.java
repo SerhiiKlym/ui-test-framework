@@ -1,6 +1,8 @@
 package com.epam.final_task.serhii_klymenko.test;
 
+import com.epam.final_task.serhii_klymenko.model.User;
 import com.epam.final_task.serhii_klymenko.page.LoginPage;
+import com.epam.final_task.serhii_klymenko.service.UserDataProvider;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.annotations.Test;
@@ -11,14 +13,14 @@ public class LoginTest extends BaseTest {
 
     private final static Logger log = LogManager.getLogger(LoginTest.class);
 
-    @Test
-    public void UC1LoginWithEmptyCredentials() {
+    @Test(dataProvider = "userProvider", dataProviderClass = UserDataProvider.class)
+    public void UC1LoginWithEmptyCredentials(User user) {
         log.info("Running test on thread: " + Thread.currentThread().getId());
         LoginPage loginPage = new LoginPage();
 
         loginPage = loginPage.openPage()
-                .inputRandomName()
-                .inputRandomPassword()
+                .inputUserName(user)
+                .inputWrongPassword(user)
                 .clearName()
                 .clearPassword()
                 .hitLoginButton();
@@ -29,14 +31,14 @@ public class LoginTest extends BaseTest {
         assertEquals(error, "Epic sadface: Username is required");
     }
 
-    @Test
-    public void UC2LoginWithEmptyPassword() {
+    @Test(dataProvider = "userProvider", dataProviderClass = UserDataProvider.class)
+    public void UC2LoginWithEmptyPassword(User user) {
         log.info("Running test on thread: " + Thread.currentThread().getId());
         LoginPage loginPage = new LoginPage();
 
         loginPage = loginPage.openPage()
-                .inputRandomName()
-                .inputRandomPassword()
+                .inputUserName(user)
+                .inputWrongPassword(user)
                 .clearPassword()
                 .hitLoginButton();
         String error = "";
@@ -46,14 +48,14 @@ public class LoginTest extends BaseTest {
         assertEquals(error, "Epic sadface: Password is required");
     }
 
-    @Test
-    public void UC3LoginWithLegitCredentials() {
+    @Test(dataProvider = "userProvider", dataProviderClass = UserDataProvider.class)
+    public void UC3LoginWithLegitCredentials(User user) {
         log.info("Running test on thread: " + Thread.currentThread().getId());
         LoginPage loginPage = new LoginPage();
 
         loginPage = loginPage.openPage()
-                .inputLegitName()
-                .inputLegitPassword()
+                .inputUserName(user)
+                .inputLegitPassword(user)
                 .hitLoginButton();
         String welcomeMsg = "";
         if (loginPage.isWelcomeMessageDisplayed()) {

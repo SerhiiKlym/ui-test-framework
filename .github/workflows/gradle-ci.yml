@@ -98,3 +98,10 @@ jobs:
         with:
           name: selenium-test-results-${{ matrix.browser }}
           path: app/build/reports/tests/test/
+
+      - name: Upload Screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: selenium-screenshots
+          path: app/build/screenshots/
