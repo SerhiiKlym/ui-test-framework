@@ -36,8 +36,10 @@ public class TestListener implements ITestListener {
             File targetFile = new File(screensDir, getCurrentTimeAsString() + ".png");
 
             boolean isCreated = targetFile.getParentFile().mkdirs();
-            if (!isCreated) {
+            if (!isCreated && !targetFile.getParentFile().exists()) {
                 log.warn("Failed to create screenshot directory: " + targetFile.getParentFile());
+            } else if (!isCreated) {
+                log.info("Screenshot directory already exists: " + targetFile.getParentFile());
             }
 
             FileUtils.copyFile(screenCapture, targetFile);

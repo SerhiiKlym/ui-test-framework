@@ -18,6 +18,8 @@ public class LoginPage extends AbstractPage {
     protected String baseUrl = ConfigReader.get("baseUrl");
     protected String timeout = ConfigReader.get("timeout");
 
+    private final static String title = "Swag Labs";
+
     @FindBy(css = "#user-name")
     WebElement userNameInputField;
     @FindBy(css = "#password")
@@ -33,10 +35,13 @@ public class LoginPage extends AbstractPage {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(Long.parseLong(timeout)));
     }
 
-    //TODO throw an exception if URL and page title don't match
     @Override
     public LoginPage openPage() {
         driver.get(baseUrl);
+        if (!driver.getCurrentUrl().equals(baseUrl) || !driver.getTitle().equals(title)) {
+            System.out.println(driver.getCurrentUrl() + " " + baseUrl + " " + driver.getTitle() + " " + title);
+            throw new RuntimeException("Failed to open the page: " + baseUrl);
+        }
         return this;
     }
 
