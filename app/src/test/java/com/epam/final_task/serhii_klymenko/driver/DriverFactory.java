@@ -14,20 +14,33 @@ public class DriverFactory {
         if (driver.get() == null) {
             synchronized (DriverFactory.class) {
                 if (driver.get() == null) {
+                    log.info("Creating new WebDriver instance...");
                     driver.set(createDriver());
+                } else {
+                    log.info("Reusing existing WebDriver instance.");
                 }
             }
         }
-
+        log.info("Maximizing browser window...");
         driver.get().manage().window().maximize();
         return driver.get();
     }
 
     private static BrowserStrategy getBrowserStrategy(String browser) {
+        log.info("Selecting browser strategy for: {}", browser);
         return switch (browser.toLowerCase()) {
-            case "firefox" -> new FirefoxStrategy();
-            case "chrome" -> new ChromeStrategy();
-            default -> throw new IllegalArgumentException("Unsupported browser: " + browser);
+            case "firefox" -> {
+                log.info("Using FirefoxStrategy");
+                yield new FirefoxStrategy();
+            }
+            case "chrome" -> {
+                log.info("Using ChromeStrategy");
+                yield new ChromeStrategy();
+            }
+            default -> {
+                log.error("Unsupported browser provided: {}", browser);
+                throw new IllegalArgumentException("Unsupported browser: " + browser);
+            }
         };
     }
 
@@ -50,8 +63,11 @@ public class DriverFactory {
 
     public static void closeDriver() {
         if (driver.get() != null) {
+            log.info("Closing WebDriver instance...");
             driver.get().quit();
             driver.remove();
+        } else {
+            log.warn("Attempted to close WebDriver, but it was already null.");
         }
     }
 }

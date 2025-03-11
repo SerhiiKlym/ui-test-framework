@@ -10,7 +10,6 @@ import org.testng.annotations.DataProvider;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Iterator;
 
 public class UserDataProvider {
@@ -21,29 +20,37 @@ public class UserDataProvider {
 
     @DataProvider(name = "userProvider")
     public static Object[][] userProvider() {
-        log.info("userProvider() method has been invoked... Loading userData....");
+        log.info("Loading user test data from {}", TEST_DATA_FILE_PATH);
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode;
-        Object[][] userData = null;
+        Object[][] userData;
 
         try {
             jsonNode = objectMapper.readTree(new File(TEST_DATA_FILE_PATH));
             JsonNode usernamesNode = jsonNode.get("usernames");
+
+            if (usernamesNode == null || !usernamesNode.isArray()) {
+                log.error("Invalid JSON format: 'usernames' field is missing or not an array.");
+                return new Object[0][0];
+            }
             userData = new Object[usernamesNode.size()][1];//[iterations][1 user per iteration]
 
             Iterator<JsonNode> iterator = usernamesNode.iterator();
             int index = 0;
             while (iterator.hasNext()) {
                 String username = iterator.next().asText();
+                log.info("Loaded user: {}", username);
                 userData[index++][0] = new User(username);
             }
         } catch (StreamReadException e) {
-            log.error("Error reading JSON file. Possible format issue: " + e.getMessage(), e);
+            log.error("Error reading JSON file. Possible format issue: {}", e.getMessage(), e);
+            return new Object[0][0];
         } catch (IOException e) {
-            log.error("Error reading JSON file. Cannot find the file: " + e.getMessage(), e);
+            log.error("Failed to load test data from file: {}", TEST_DATA_FILE_PATH, e);
+            return new Object[0][0];
         }
 
-        log.info("Object userData: " + Arrays.deepToString(userData));
+        log.info("Successfully loaded {} users from test data.", userData.length);
         return userData;
     }
 }
