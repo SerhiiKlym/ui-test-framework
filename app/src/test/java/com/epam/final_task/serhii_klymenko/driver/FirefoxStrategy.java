@@ -16,8 +16,9 @@ public class FirefoxStrategy implements BrowserStrategy {
         if (System.getenv("GITHUB_ACTIONS") != null) {
             options.addArguments("--headless");
         }
+        options.setCapability("moz:debuggerAddress", true);
 
-        log.info("Firefox driver was created.");
+        log.info("Firefox driver created using WebDriver BiDi.");
         return new FirefoxDriver(options);
     }
 }
