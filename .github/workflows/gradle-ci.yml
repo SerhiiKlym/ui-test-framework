@@ -31,6 +31,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+
       - name: Install Chrome and Matching ChromeDriver
         if: matrix.browser == 'chrome'
         run: |
@@ -56,6 +57,7 @@ jobs:
           sudo chmod +x /usr/bin/chromedriver
           chromedriver --version
 
+
       - name: Install Firefox and GeckoDriver
         if: matrix.browser == 'firefox'
         run: |
@@ -75,8 +77,8 @@ jobs:
           # Remove any existing Geckodriver
           sudo rm -f /usr/local/bin/geckodriver
 
-          # Install a compatible Geckodriver version (e.g., 0.34.0)
-          GECKODRIVER_VERSION="v0.34.0"
+          # Install a compatible Geckodriver version (e.g., 0.36.0)
+          GECKODRIVER_VERSION="v0.36.0"
           wget "https://github.com/mozilla/geckodriver/releases/download/$GECKODRIVER_VERSION/geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz"
           tar -xvzf "geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz"
           sudo mv geckodriver /usr/local/bin/
