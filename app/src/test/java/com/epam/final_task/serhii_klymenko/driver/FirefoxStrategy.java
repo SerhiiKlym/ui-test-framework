@@ -16,9 +16,10 @@ public class FirefoxStrategy implements BrowserStrategy {
         if (System.getenv("GITHUB_ACTIONS") != null) {
             options.addArguments("--headless");
         }
-        options.setCapability("moz:debuggerAddress", true);
+        options.setCapability("webSocketUrl", true);
+        options.setCapability("moz:firefoxOptions", "{\"remote_debugging\": true}");
 
-        log.info("Firefox driver created using WebDriver BiDi.");
+        log.info("Firefox driver created using WebDriver BiDi (CDP Disabled).");
         return new FirefoxDriver(options);
     }
 }
