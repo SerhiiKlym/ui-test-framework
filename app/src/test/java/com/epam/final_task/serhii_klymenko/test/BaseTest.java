@@ -23,6 +23,5 @@ public class BaseTest {
     public void tearDown() {
         DriverFactory.closeDriver();
         log.info("The driver was annihilated on thread: " + Thread.currentThread().getId());
-
     }
 }

@@ -1,5 +1,6 @@
 package com.epam.final_task.serhii_klymenko.page;
 
+import com.epam.final_task.serhii_klymenko.model.User;
 import com.epam.final_task.serhii_klymenko.util.ConfigReader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -24,7 +25,7 @@ public class LoginPage extends AbstractPage {
     @FindBy(css = "#login-button")
     WebElement loginButton;
     private final By errorMessage = By.cssSelector(".error-message-container.error h3");
-   private final By welcomeMessage = By.cssSelector("div.header_label div.app_logo");
+    private final By welcomeMessage = By.cssSelector("div.header_label div.app_logo");
 
     public LoginPage() {
         super();
@@ -32,23 +33,19 @@ public class LoginPage extends AbstractPage {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(Long.parseLong(timeout)));
     }
 
+    //TODO throw an exception if URL and page title don't match
     @Override
     public LoginPage openPage() {
         driver.get(baseUrl);
         return this;
     }
 
-    // TODO: parametrize
-    public LoginPage inputRandomName() {
-        wait.until(ExpectedConditions.visibilityOf(userNameInputField)).sendKeys("random_name");
-        return this;
-    }
-    public LoginPage inputLegitName() {
-        wait.until(ExpectedConditions.visibilityOf(userNameInputField)).sendKeys("standard_user");
+    public LoginPage inputUserName(User user) {
+        wait.until(ExpectedConditions.visibilityOf(userNameInputField)).sendKeys(user.getUserName());
         return this;
     }
 
-    public LoginPage clearName()  {
+    public LoginPage clearName() {
 //        wait.until(ExpectedConditions.elementToBeClickable(userNameInputField)).click(); //chrome autofills name after clear()
 //        wait.until(ExpectedConditions.visibilityOf(userNameInputField)).clear();
         userNameInputField.sendKeys(Keys.CONTROL + "a");
@@ -56,18 +53,17 @@ public class LoginPage extends AbstractPage {
         return this;
     }
 
-    // TODO: parametrize
-    public LoginPage inputRandomPassword()  {
-        wait.until(ExpectedConditions.visibilityOf(userPasswordInputField)).sendKeys("random_pass");
+    public LoginPage inputWrongPassword(User user) {
+        wait.until(ExpectedConditions.visibilityOf(userPasswordInputField)).sendKeys(user.getWrongPassWord());
         return this;
     }
 
-    public LoginPage inputLegitPassword()  {
-        wait.until(ExpectedConditions.visibilityOf(userPasswordInputField)).sendKeys("secret_sauce");
+    public LoginPage inputLegitPassword(User user) {
+        wait.until(ExpectedConditions.visibilityOf(userPasswordInputField)).sendKeys(user.getCorrectPassWord());
         return this;
     }
 
-    public LoginPage clearPassword()  {
+    public LoginPage clearPassword() {
 //        wait.until(ExpectedConditions.elementToBeClickable(userPasswordInputField)).click();
 //        wait.until(ExpectedConditions.visibilityOf(userPasswordInputField)).clear();
         wait.until(ExpectedConditions.visibilityOf(userPasswordInputField)).sendKeys(Keys.CONTROL + "a");
@@ -87,7 +83,8 @@ public class LoginPage extends AbstractPage {
     public String getErrorMessage() {
         return driver.findElement(errorMessage).getText();
     }
-     public boolean isWelcomeMessageDisplayed() {
+
+    public boolean isWelcomeMessageDisplayed() {
         return driver.findElement(welcomeMessage).isDisplayed();
     }
 
