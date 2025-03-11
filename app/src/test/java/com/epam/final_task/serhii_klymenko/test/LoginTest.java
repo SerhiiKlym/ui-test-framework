@@ -15,7 +15,7 @@ public class LoginTest extends BaseTest {
 
     @Test(dataProvider = "userProvider", dataProviderClass = UserDataProvider.class)
     public void UC1LoginWithEmptyCredentials(User user) {
-        log.info("Running test on thread: " + Thread.currentThread().getId());
+        log.info("Starting UC1 test for user: {}, running test on thread: {}", user.getUserName(), Thread.currentThread().getId());
         LoginPage loginPage = new LoginPage();
 
         loginPage = loginPage.openPage()
@@ -33,7 +33,7 @@ public class LoginTest extends BaseTest {
 
     @Test(dataProvider = "userProvider", dataProviderClass = UserDataProvider.class)
     public void UC2LoginWithEmptyPassword(User user) {
-        log.info("Running test on thread: " + Thread.currentThread().getId());
+        log.info("Starting UC2 test for user: {}, running test on thread: {}", user.getUserName(), Thread.currentThread().getId());
         LoginPage loginPage = new LoginPage();
 
         loginPage = loginPage.openPage()
@@ -50,7 +50,7 @@ public class LoginTest extends BaseTest {
 
     @Test(dataProvider = "userProvider", dataProviderClass = UserDataProvider.class)
     public void UC3LoginWithLegitCredentials(User user) {
-        log.info("Running test on thread: " + Thread.currentThread().getId());
+        log.info("Starting UC3 test for user: {}, running test on thread: {}", user.getUserName(), Thread.currentThread().getId());
         LoginPage loginPage = new LoginPage();
 
         loginPage = loginPage.openPage()
