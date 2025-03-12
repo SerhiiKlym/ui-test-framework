@@ -67,8 +67,8 @@ jobs:
           sudo apt remove --purge -y firefox
           sudo apt autoremove -y
 
-          # Install a specific Firefox version (e.g., 136.0)
-          FIREFOX_VERSION="136.0"  # Change this to the desired version
+          # Install a specific Firefox version (e.g., 135.0)
+          FIREFOX_VERSION="135.0"  # Change this to the desired version
           wget "https://ftp.mozilla.org/pub/firefox/releases/$FIREFOX_VERSION/linux-x86_64/en-US/firefox-$FIREFOX_VERSION.tar.bz2"
           tar -xjf "firefox-$FIREFOX_VERSION.tar.bz2"
           sudo mv firefox /opt/firefox
