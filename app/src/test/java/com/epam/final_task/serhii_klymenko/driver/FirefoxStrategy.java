@@ -21,6 +21,13 @@ public class FirefoxStrategy implements BrowserStrategy {
         options.setCapability("moz:firefoxOptions", "{\"remote_debugging\": true}");
 
         log.info("Firefox driver created using WebDriver BiDi (CDP Disabled).");
-        return new FirefoxDriver(options);
+        try {
+            WebDriver driver = new FirefoxDriver(options);
+            log.info("Firefox WebDriver successfully created.");
+            return driver;
+        } catch (Exception e) {
+            log.error("Failed to initialize Firefox WebDriver!", e);
+            throw e; // Rethrow to fail the test
+        }
     }
 }
