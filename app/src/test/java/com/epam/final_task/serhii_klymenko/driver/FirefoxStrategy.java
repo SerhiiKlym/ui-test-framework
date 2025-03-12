@@ -15,6 +15,7 @@ public class FirefoxStrategy implements BrowserStrategy {
 
         if (System.getenv("GITHUB_ACTIONS") != null) {
             options.addArguments("--headless");
+            options.addArguments("--remote-debugging-port=9222");
         }
         options.setCapability("webSocketUrl", true);
         options.setCapability("moz:firefoxOptions", "{\"remote_debugging\": true}");
