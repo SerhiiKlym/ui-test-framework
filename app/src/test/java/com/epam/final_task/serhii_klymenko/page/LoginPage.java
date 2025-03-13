@@ -10,17 +10,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 
 public class LoginPage extends AbstractPage {
 
     private final static Logger log = LogManager.getLogger(LoginPage.class);
 
-    private final WebDriverWait wait;
     protected String baseUrl = ConfigReader.get("baseUrl");
-    protected String timeout = ConfigReader.get("timeout");
 
     private final static String title = "Swag Labs";
 
@@ -36,10 +31,8 @@ public class LoginPage extends AbstractPage {
     public LoginPage() {
         super();
         PageFactory.initElements(driver, this);
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(Long.parseLong(timeout)));
     }
 
-    @Override
     public LoginPage openPage() {
         driver.get(baseUrl);
         if (!driver.getCurrentUrl().equals(baseUrl) || !driver.getTitle().equals(title)) {
