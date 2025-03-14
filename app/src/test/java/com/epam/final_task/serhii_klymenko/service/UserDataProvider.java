@@ -18,7 +18,7 @@ public class UserDataProvider {
 
     private static final String TEST_DATA_FILE_PATH = "src/test/resources/test-data-users.json";
 
-    @DataProvider(name = "userProvider")
+    @DataProvider(name = "userProvider", parallel = true)
     public static Object[][] userProvider() {
         log.info("Loading user test data from {}", TEST_DATA_FILE_PATH);
         ObjectMapper objectMapper = new ObjectMapper();
