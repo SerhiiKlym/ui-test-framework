@@ -25,39 +25,46 @@ public class LoginSteps {
 
     @Given("User is on the login page")
     public void user_is_on_login_page() {
+        log.info("Navigating to the login page (cucu)...");
         loginPage.openApp();
     }
 
     @When("User enters username {string}")
     public void user_enters_username(String username) {
+        log.info("Entering username: {}", username);
         user = new User(username);
         loginPage.inputUserName(user);
     }
 
     @And("User enters password for user {string}")
     public void user_enters_password(String username) {
+        log.info("Entering password for user: {}", username);
         user = new User(username);
         loginPage.inputLegitPassword(user);
     }
 
     @And("User clears password")
     public void user_clears_password() {
+        log.info("Clearing password field...");
         loginPage.clearPassword();
     }
 
     @And("User clears username")
     public void user_clears_username() {
+        log.info("Clearing username field...");
         loginPage.clearName();
     }
 
     @And("User clicks on login button")
     public void user_clicks_login() {
+        log.info("Clicking the login button...");
         abstractPage = loginPage.hitLoginButton();
     }
 
     @Then("User should be shown an error message 'no username'")
     public void user_is_shown_error_nousername() {
         if (abstractPage instanceof InventoryPage) {
+            log.info("Verifying error message for missing username...");
             verifyInventoryPage(abstractPage);
         } else if (abstractPage instanceof LoginPage) {
             log.info("resultPage instanceof LoginPage");
@@ -69,6 +76,7 @@ public class LoginSteps {
     @Then("User should be shown an error message 'no password'")
     public void user_is_shown_error_nopassword() {
         if (abstractPage instanceof InventoryPage) {
+            log.info("Verifying error message for missing password...");
             verifyInventoryPage(abstractPage);
         } else if (abstractPage instanceof LoginPage) {
             log.info("resultPage instanceof LoginPage");
