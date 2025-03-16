@@ -104,6 +104,13 @@ jobs:
           name: selenium-test-results-${{ matrix.browser }}
           path: app/build/reports/tests/test/
 
+      - name: Upload Cucumber Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cucumber-reports-${{ matrix.browser }}
+          path: build/reports/cucumber/
+
       - name: Upload Screenshots
         if: failure()
         uses: actions/upload-artifact@v4
