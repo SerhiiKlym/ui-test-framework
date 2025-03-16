@@ -9,4 +9,10 @@
         </classes>
     </test>
 
+    <test name="Cucumber Tests">
+        <classes>
+            <class name="com.epam.final_task.serhii_klymenko.test.TestRunner"/>
+        </classes>
+    </test>
+
 </suite>
