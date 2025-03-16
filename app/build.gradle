@@ -32,10 +32,6 @@ dependencies {
 test {
     useTestNG() {}
 
-    //systemProperty "cucumber.options", System.getProperty("cucumber.options", "")
-   // systemProperty "browser", System.getProperty("browser", "chrome")
-   // maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 2  // Dynamically set parallel forks
-
     testLogging {
         showStandardStreams = true
         events "PASSED", "FAILED", "SKIPPED"
