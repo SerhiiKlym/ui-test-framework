@@ -12,8 +12,8 @@ import org.testng.annotations.DataProvider;
         },
         plugin = {
                 "pretty",
-                "html:build/reports/cucumber/cucumber-report.html",
-                "json:build/reports/cucumber/cucumber-report.json"
+                "html:build/reports/cucumber/tests/cucumber-report.html",
+                "json:build/reports/cucumber/tests/cucumber-report.json"
         },
         monochrome = true
 )
