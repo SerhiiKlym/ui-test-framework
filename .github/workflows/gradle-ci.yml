@@ -92,9 +92,7 @@ jobs:
         run: chmod +x gradlew
     
       - name: Run Selenium Tests with ${{ matrix.browser }}
-        run: ./gradlew test --no-daemon
-        env:
-          BROWSER: ${{ matrix.browser }}
+        run: ./gradlew test -Dbrowser=${{ matrix.browser }} --no-daemon
 
       - name: Run Cucumber Tests with ${{ matrix.browser }}
         run: ./gradlew test -Dbrowser=${{ matrix.browser }} -Dtest=com.epam.final_task.serhii_klymenko.test.TestRunner --no-daemon
