@@ -52,12 +52,6 @@ public class LoginPage extends AbstractPage {
         return this;
     }
 
-    public LoginPage inputWrongPassword(User user) {
-        log.info("Entering wrong password {} for  username: {}", user.getWrongPassWord(), user.getUserName());
-        wait.until(ExpectedConditions.visibilityOf(userPasswordInputField)).sendKeys(user.getWrongPassWord());
-        return this;
-    }
-
     public LoginPage inputLegitPassword(User user) {
         log.info("Entering correct password {} for  username: {}", user.getCorrectPassWord(), user.getUserName());
         wait.until(ExpectedConditions.visibilityOf(userPasswordInputField)).sendKeys(user.getCorrectPassWord());

@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="Regression Suite" parallel="methods">
+<suite name="Regression Suite" parallel="methods" thread-count="9">
 
     <test name="Login Tests">
         <classes>
             <class name="com.epam.final_task.serhii_klymenko.test.LoginTest"/>
+        </classes>
+    </test>
+
+    <test name="Cucumber Tests">
+        <classes>
+            <class name="com.epam.final_task.serhii_klymenko.test.TestRunner"/>
         </classes>
     </test>
 
