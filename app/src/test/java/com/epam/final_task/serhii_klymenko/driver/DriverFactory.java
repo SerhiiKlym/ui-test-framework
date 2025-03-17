@@ -49,7 +49,11 @@ public class DriverFactory {
         log.info("System property browser: " + browser);
 
         if (browser == null || browser.isEmpty()) {
-            browser = ConfigReader.get("browsers").toLowerCase(); // Get from config file
+            browser = System.getenv("BROWSER"); // Get from environment variables
+        }
+
+        if (browser == null || browser.isEmpty()) {
+            browser = ConfigReader.get("browsers").toLowerCase(); // Get from props
         }
 
         log.info("Final browser selection: " + browser);

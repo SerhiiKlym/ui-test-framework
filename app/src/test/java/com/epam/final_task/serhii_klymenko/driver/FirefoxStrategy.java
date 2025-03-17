@@ -17,7 +17,7 @@ public class FirefoxStrategy implements BrowserStrategy {
             options.addArguments("--headless");
         }
 
-        log.info("Firefox driver was created.");
+        log.info("Firefox driver was created on thread: " + Thread.currentThread().getId());
         return new FirefoxDriver(options);
     }
 }
