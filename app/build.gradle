@@ -42,15 +42,3 @@ test {
         html.required = true
     }
 }
-
-//tasks.register('cucumber', JavaExec) {
-//    main = "io.cucumber.core.cli.Main"
-//    classpath = sourceSets.test.runtimeClasspath
-//    args = [
-//            '--plugin', 'pretty',
-//            '--plugin', 'json:app/build/reports/cucumber/cucumber.json',
-//            '--plugin', 'html:app/build/reports/cucumber/',
-//            '--glue', 'com.epam.final_task.serhii_klymenko.stepDefinitions',
-//            'src/test/resources/features'
-//    ]
-//}
