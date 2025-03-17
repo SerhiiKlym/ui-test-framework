@@ -6,7 +6,7 @@ public class User {
 
     public User(String userName) {
         this.userName = userName;
-        this.correctPassWord = "secret_sauce1";
+        this.correctPassWord = "secret_sauce";
     }
 
     public String getUserName() {
