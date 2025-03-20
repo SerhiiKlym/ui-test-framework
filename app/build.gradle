@@ -32,6 +32,8 @@ dependencies {
 test {
     useTestNG() {}
 
+    systemProperty "browser", System.getProperty("browser")
+
     testLogging {
         showStandardStreams = true
         events "PASSED", "FAILED", "SKIPPED"
