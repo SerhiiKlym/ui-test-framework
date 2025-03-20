@@ -34,11 +34,6 @@ test {
 
     systemProperty "browser", System.getProperty("browser")
 
-    testLogging {
-        showStandardStreams = true
-        events "PASSED", "FAILED", "SKIPPED"
-    }
-
     reports {
         junitXml.required = true
         html.required = true
