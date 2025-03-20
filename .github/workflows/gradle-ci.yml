@@ -111,7 +111,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: cucumber-reports-${{ matrix.browser }}
-          path: app/build/reports/cucumber/tests/
+          path: app/build/reports/cucumber/
 
       - name: Upload Screenshots
         if: failure()
