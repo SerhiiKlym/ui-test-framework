@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="Regression Suite" parallel="methods" thread-count="9">
+<suite name="Regression Suite" parallel="methods">
 
     <test name="Login Tests">
         <classes>
