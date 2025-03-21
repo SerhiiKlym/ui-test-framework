@@ -50,10 +50,13 @@ tasks.register('cucumberTests', JavaExec) {
     classpath = sourceSets.test.runtimeClasspath
     args = [
             '--plugin', 'pretty',
-            '--plugin', 'html:build/reports/cucumber/tests/cucumber.html',
+            '--plugin', 'html:build/reports/cucumber/tests/cucumber-report.html',
             '--glue', 'com.epam.final_task.serhii_klymenko.stepdefinitions',
             'src/test/resources/features'
     ]
+    if (System.getProperty("parallel", "false") == "true") {
+        args += ['--threads', (Runtime.runtime.availableProcessors() / 2).toString()] // Use half CPU cores
+    }
 }
 
 tasks.register('seleniumTests', Test) {
