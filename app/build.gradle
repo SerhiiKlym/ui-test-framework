@@ -44,3 +44,20 @@ test {
         html.required = true
     }
 }
+
+tasks.register('cucumberTests', JavaExec) {
+    mainClass.set("io.cucumber.core.cli.Main")
+    classpath = sourceSets.test.runtimeClasspath
+    args = [
+            '--plugin', 'pretty',
+            '--plugin', 'html:build/reports/cucumber/tests/cucumber.html',
+            '--glue', 'com.epam.final_task.serhii_klymenko.stepdefinitions',
+            'src/test/resources/features'
+    ]
+}
+
+tasks.register('seleniumTests', Test) {
+    useTestNG()
+    include '**/*Test*'
+    exclude '**/*Cucumber*'
+}
