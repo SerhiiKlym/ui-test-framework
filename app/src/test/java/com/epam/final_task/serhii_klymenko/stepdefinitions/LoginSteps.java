@@ -76,11 +76,12 @@ public class LoginSteps {
     @Then("User should be shown an error message 'no password'")
     public void user_is_shown_error_nopassword() {
         if (abstractPage instanceof InventoryPage) {
+            log.info("Verifying that resultPage is an instance of InventoryPage. Actual class: {}", abstractPage.getClass().getSimpleName());
             log.info("Verifying error message for missing password...");
             verifyInventoryPage(abstractPage);
         } else if (abstractPage instanceof LoginPage) {
-            log.info("resultPage instanceof LoginPage");
-            assertTrue(((LoginPage) abstractPage).isErrorMessageDisplayed());
+            log.info("Verifying that resultPage is an instance of LoginPage. Actual class: {}", abstractPage.getClass().getSimpleName());
+            assertTrue(((LoginPage) abstractPage).isErrorMessageDisplayed(), "Error message should be displayed on LoginPage, but it was not.");
             assertEquals(((LoginPage) abstractPage).getErrorMessage(), "Epic sadface: Password is required");
         }
     }

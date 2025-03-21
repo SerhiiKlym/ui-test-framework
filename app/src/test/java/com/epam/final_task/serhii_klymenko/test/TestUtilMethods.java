@@ -14,8 +14,10 @@ public class TestUtilMethods {
 
 
     public static void verifyInventoryPage(AbstractPage resultPage) {
-        assertTrue(resultPage instanceof InventoryPage, "Expected InventoryPage but got: " + resultPage.getClass().getSimpleName());
-        log.info("Result page is InventoryPage");
+        assertTrue(resultPage instanceof InventoryPage,
+                String.format("Page validation failed! Expected: InventoryPage, but got: %s", resultPage.getClass().getSimpleName()));
+
+        log.info("Successfully navigated to InventoryPage: {}", resultPage.getClass().getSimpleName());
 
         InventoryPage inventoryPage = (InventoryPage) resultPage;
         assertTrue(inventoryPage.isInventoryPageOpened(), "Inventory page did not open successfully");
