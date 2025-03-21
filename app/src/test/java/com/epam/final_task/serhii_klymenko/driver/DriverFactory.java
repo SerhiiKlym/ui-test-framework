@@ -15,7 +15,7 @@ public class DriverFactory {
             synchronized (DriverFactory.class) {
                 if (driver.get() == null) {
                     log.info("Creating new WebDriver instance...");
-                    driver.set(newWebDriver());
+                    driver.set(newWebDriverOnStrategy());
                 } else {
                     log.info("Reusing existing WebDriver instance.");
                 }
@@ -44,7 +44,7 @@ public class DriverFactory {
         };
     }
 
-    private static WebDriver newWebDriver() {
+    private static WebDriver newWebDriverOnStrategy() {
         String browser = System.getProperty("browser"); // Get from system properties
         log.info("System property browser: " + browser);
 
