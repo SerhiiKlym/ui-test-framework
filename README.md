@@ -1,5 +1,5 @@
-# EPAM Automated Testing in JAVA #5 - Final Task
-A Selenium TestNG project based on Gradle, final task for Epam Automated Testing in JAVA #5
+# Automated Testing in JAVA
+A Selenium TestNG project based on Gradle
 
 
 ## Task description
